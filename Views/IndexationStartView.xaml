@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="IndexApp.Views.IndexationStartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IndexApp.Views"
+             xmlns:components="clr-namespace:IndexApp.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" FontSize="30" Text="Индексатор файлов" />
+
+            <Button 
+                Name="btnOpenFiles" 
+                Grid.Column="1" 
+                Content="Добавить файлы" 
+                Command="{Binding AddFilesCommand}"
+                Background="#4169E1"
+                Width="130"/>
+            <Button 
+                Name="btnStart" 
+                Grid.Column="2" 
+                Content="Пуск" 
+                Command="{Binding StartIndexationCommand}"
+                Background="Green" 
+                Width="68" />
+        </Grid>
+
+        <Line Grid.Row="1" Style="{StaticResource horizontalLineStyle}"/>
+
+        <Grid Grid.Row="2" Margin="0 7 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="164"/>
+                <ColumnDefinition Width="1.7*"/>
+                <ColumnDefinition Width="1.7*"/>
+                <ColumnDefinition Width="1.7*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" FontSize="15" Text="Добавленные файлы" TextAlignment="Center" Foreground="#4169E1" />
+            <TextBlock Grid.Column="1" FontSize="15" Text="Список уникальных слов" TextAlignment="Center" Foreground="#32CD32" />
+            <TextBlock Grid.Column="2" FontSize="15" Text="Слово - файл" TextAlignment="Center" Foreground="ForestGreen"/>
+            <TextBlock Grid.Column="3" FontSize="15" Text="Файл - слово - позиции" TextAlignment="Center" Foreground="DarkGreen"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0 7 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <components:FilesListingView Grid.Column="0" DataContext="{Binding FilesListingViewModel}"/>
+            <components:UniqueWordsListingView Grid.Column="1" Margin="20 0 0 0" DataContext="{Binding UniqueWordsViewModel}"/>
+            <components:WordFilesListingView Grid.Column="2" Margin="4 0 0 0" DataContext="{Binding WordFilesListingViewModel}"/>
+            <components:FileWordPosListingView Grid.Column="3" Margin="4 0 0 0" DataContext="{Binding FileWordPosListingViewModel}"/>
+        </Grid>
+    </Grid>
+</UserControl>
