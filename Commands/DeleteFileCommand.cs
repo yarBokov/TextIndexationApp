@@ -10,17 +10,19 @@ namespace IndexApp.Commands
     public class DeleteFileCommand : CommandBase
     {
         private readonly FilesListingViewModel _filesListingViewModel;
-        private readonly string _fileToDelete;
+        private readonly string _fileToDeleteNoPath;
+        private readonly string _fileToDeleteFullPath;
 
-        public DeleteFileCommand(FilesListingViewModel filesListingViewModel, string fileName) 
+        public DeleteFileCommand(FilesListingViewModel filesListingViewModel, string fileNameNoPath, string fileNameFullPath) 
         { 
             _filesListingViewModel = filesListingViewModel;
-            _fileToDelete = fileName;
+            _fileToDeleteNoPath = fileNameNoPath;
+            _fileToDeleteFullPath = fileNameFullPath;
         }
 
         public override void Execute(object? parameter)
         {
-            _filesListingViewModel.RemoveItem(_fileToDelete);
+            _filesListingViewModel.RemoveItem(_fileToDeleteNoPath, _fileToDeleteFullPath);
         }
     }
 }

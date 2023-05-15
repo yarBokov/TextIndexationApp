@@ -30,7 +30,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" Text="{Binding FileName}" Height="25" Padding="3"/>
+                                    <TextBlock Grid.Column="0" Text="{Binding FileNameNoPath}" Height="25" Padding="3"/>
                                     <Button Grid.Column="1" Margin="5 0 0 0" Content="&#10006;" Command="{Binding DeleteCommand}" Height="29" Width="56"/>
                                 </Grid>
                             </Border>

@@ -34,7 +34,7 @@ namespace IndexApp.Commands
             List<string> files = new List<string>();
             if (openFileDialog.ShowDialog() == true)
             {
-                files = getFileNames(openFileDialog.FileNames);
+                files = getFileNames(openFileDialog.FileNames).OrderBy(i => i).ToList();
             }
             foreach (string fileName in files)
             {
@@ -47,7 +47,7 @@ namespace IndexApp.Commands
             List<string> fileNames = new List<string>();
             foreach (string filepath in files)
             {
-                fileNames.Add(Path.GetFileName(filepath));
+                fileNames.Add(filepath);
             }
             return fileNames;
         }

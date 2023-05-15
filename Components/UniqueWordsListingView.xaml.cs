@@ -24,5 +24,10 @@ namespace IndexApp.Components
         {
             InitializeComponent();
         }
+
+        private void ListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

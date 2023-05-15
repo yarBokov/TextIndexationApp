@@ -51,7 +51,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" FontSize="15" Text="Добавленные файлы" TextAlignment="Center" Foreground="#4169E1" />
-            <TextBlock Grid.Column="1" FontSize="15" Text="Список уникальных слов" TextAlignment="Center" Foreground="#32CD32" />
+            <TextBlock Grid.Column="1" FontSize="15" Text="    Список уникальных слов" TextAlignment="Center" Foreground="#32CD32" />
             <TextBlock Grid.Column="2" FontSize="15" Text="Слово - файл" TextAlignment="Center" Foreground="ForestGreen"/>
             <TextBlock Grid.Column="3" FontSize="15" Text="Файл - слово - позиции" TextAlignment="Center" Foreground="DarkGreen"/>
         </Grid>

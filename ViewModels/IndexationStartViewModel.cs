@@ -26,7 +26,7 @@ namespace IndexApp.ViewModels
             WordFilesListingViewModel= new WordFilesListingViewModel();
 
             AddFilesCommand = new AddFilesCommand(FilesListingViewModel);
-            StartIndexationCommand = new StartIndexationCommand();
+            StartIndexationCommand = new StartIndexationCommand(FilesListingViewModel, UniqueWordsViewModel,FileWordPosListingViewModel, WordFilesListingViewModel);
         }
     }
 }
