@@ -11,30 +11,19 @@ namespace IndexApp.Commands
     public class StartIndexationCommand : CommandBase
     {
         private readonly FilesListingViewModel _filesListing;
-        private readonly UniqueWordsViewModel _uniqueWordsViewModel;
-        private readonly FileWordPosListingViewModel _fileWordPosListingViewModel;
-        private readonly WordFilesListingViewModel _wordFilesListingViewModel;
+        private readonly IndexationResultViewModel _result;
 
-        public StartIndexationCommand(FilesListingViewModel filesListingViewModel, UniqueWordsViewModel uniqueWordsViewModel, 
-            FileWordPosListingViewModel fileWordPosListingViewModel, 
-            WordFilesListingViewModel wordFilesListingViewModel)
+        public StartIndexationCommand(FilesListingViewModel filesListingViewModel, IndexationResultViewModel indexationResultViewModel)
         {
             _filesListing=filesListingViewModel;
-            _uniqueWordsViewModel = uniqueWordsViewModel;
-            _fileWordPosListingViewModel = fileWordPosListingViewModel;
-            _wordFilesListingViewModel = wordFilesListingViewModel;
+            _result = indexationResultViewModel;
         }
 
         public override void Execute(object? parameter)
         {
-            clearLists();
+            _result.Clear();
             var indexator = new IndexatorUtility(_filesListing);
-            _uniqueWordsViewModel.InsertWords(indexator.UniqueWords.ToList());
-        }
-
-        private void clearLists()
-        {
-            _uniqueWordsViewModel.Clear();
+            _result.InsertResults(indexator.getResults());
         }
     }
 }

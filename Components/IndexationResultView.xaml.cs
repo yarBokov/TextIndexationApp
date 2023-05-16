@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IndexApp.Components
 {
     /// <summary>
-    /// Логика взаимодействия для FileWordPosListingView.xaml
+    /// Логика взаимодействия для IndexationResultView.xaml
     /// </summary>
-    public partial class FileWordPosListingView : UserControl
+    public partial class IndexationResultView : UserControl
     {
-        public FileWordPosListingView()
+        public IndexationResultView()
         {
             InitializeComponent();
         }

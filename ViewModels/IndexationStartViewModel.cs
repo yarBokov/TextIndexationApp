@@ -11,9 +11,7 @@ namespace IndexApp.ViewModels
     public class IndexationStartViewModel : ViewModelBase
     {
         public FilesListingViewModel FilesListingViewModel { get; }
-        public UniqueWordsViewModel UniqueWordsViewModel { get; }
-        public FileWordPosListingViewModel FileWordPosListingViewModel { get; }
-        public WordFilesListingViewModel WordFilesListingViewModel { get; }
+        public IndexationResultViewModel IndexationResultViewModel { get; }
 
         public ICommand AddFilesCommand { get; }
         public ICommand StartIndexationCommand { get; }
@@ -21,12 +19,10 @@ namespace IndexApp.ViewModels
         public IndexationStartViewModel()
         {
             FilesListingViewModel = new FilesListingViewModel();
-            UniqueWordsViewModel = new UniqueWordsViewModel();
-            FileWordPosListingViewModel= new FileWordPosListingViewModel();
-            WordFilesListingViewModel= new WordFilesListingViewModel();
+            IndexationResultViewModel = new IndexationResultViewModel();
 
             AddFilesCommand = new AddFilesCommand(FilesListingViewModel);
-            StartIndexationCommand = new StartIndexationCommand(FilesListingViewModel, UniqueWordsViewModel,FileWordPosListingViewModel, WordFilesListingViewModel);
+            StartIndexationCommand = new StartIndexationCommand(FilesListingViewModel, IndexationResultViewModel);
         }
     }
 }

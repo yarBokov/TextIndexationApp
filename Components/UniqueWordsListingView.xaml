@@ -6,40 +6,38 @@
              xmlns:local="clr-namespace:IndexApp.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+
     <Grid>
         <Border BorderBrush="{StaticResource BorderPrimary}" Padding="1" CornerRadius="5" BorderThickness="1" SnapsToDevicePixels="True">
-            <Grid>
-                <Grid.OpacityMask>
-                    <VisualBrush Visual="{Binding ElementName=border}" />
-                </Grid.OpacityMask>
-                <Border x:Name="border"
-                            Background="White"
-                            CornerRadius="5" />
-                <ListBox
-                    ItemsSource="{Binding Words}" 
-                    Margin="0" 
-                    Height="auto"
-                    BorderThickness="0" 
-                    PreviewMouseDown="ListBox_PreviewMouseDown" 
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    ScrollViewer.CanContentScroll="True">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="ListBoxItem.Background" Value="LightGreen"/>
-                            <Setter Property="ListBoxItem.Margin" Value="3"/>
-                            <Setter Property="ListBoxItem.Padding" Value="2"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="3" TextBlock.FontSize="12" TextBlock.TextAlignment="Center">
-                                <TextBlock Text="{Binding Word}" Height="25" Padding="3"/>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+            <ListBox
+                ItemsSource="{Binding Words}" 
+                Margin="0" 
+                BorderThickness="0" 
+                PreviewMouseDown="ListBox_PreviewMouseDown" >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="ListBoxItem.Background" Value="LightGreen"/>
+                        <Setter Property="ListBoxItem.Margin" Value="3"/>
+                        <Setter Property="ListBoxItem.Padding" Value="2"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.Template>
+                    <ControlTemplate TargetType="ListBox">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="3" TextBlock.FontSize="13" TextBlock.TextAlignment="Center">
+                            <TextBlock Text="{Binding Word}" Height="25" Padding="3"/>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Border>
     </Grid>
 </UserControl>
