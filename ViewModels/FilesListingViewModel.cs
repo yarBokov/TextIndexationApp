@@ -39,15 +39,15 @@ namespace IndexApp.ViewModels
 
         public void AddItem(string fileName) 
         {
-            var fileNoPath = Path.GetFileName(fileName);
+            var fileNoPath = new DirectoryInfo(fileName).Parent.Name + "/" +  Path.GetFileName(fileName);
             foreach (var fileItemViewModel in _filesListingModels)
             {
                 if (fileNoPath == fileItemViewModel.FileNameNoPath)
                     return;
             }
-            Item = new FilesListingItemViewModel(this, fileNoPath, fileName);
             try
             {
+                Item = new FilesListingItemViewModel(this, fileNoPath, fileName);
                 _filesListingModels.Add(Item);
             }
             catch(Exception ex)

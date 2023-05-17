@@ -21,7 +21,7 @@ namespace IndexApp.Commands
 
         private List<string> fileNames;
 
-        private static char[] separators = new char[] { ' ', ':', ';', '.', ',' };
+        private static List<char> separators = new List<char> { ' ', ':', ';', '.', ',' };
 
         public IndexatorUtility(FilesListingViewModel viewModel)
         {
@@ -60,13 +60,13 @@ namespace IndexApp.Commands
             string lineBuf = string.Empty;
             foreach (var line in BaseLines)
             {
-                lineBuf = line.Trim(separators);
+                lineBuf = line.Trim(separators.ToArray());
                 foreach (char ch in separators)
                 {
                     lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + "+", ch.ToString());
                     lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + @"\s", ch.ToString());
                 }
-                UniqueWords.UnionWith(lineBuf.Split(separators));
+                UniqueWords.UnionWith(lineBuf.Split(separators.ToArray()));
             }
         }
 
@@ -88,17 +88,6 @@ namespace IndexApp.Commands
             return tuples;
         }
 
-        //public List<Tuple<string, string, int, int>> getFileWordPositions()
-        //{
-        //    List<Tuple<string, string, int, int>> listTuple = new List<Tuple<string, string, int, int>>();
-        //    foreach (string file in fileNames)
-        //    {
-
-        //        listTuple.Add(Tuple.Create(file, ));
-        //    }
-        //    return listTuple;
-        //}
-
         private List<string> getFilesPerWord(string word)
         {
             List<string> listFiles = new List<string>();
@@ -113,7 +102,7 @@ namespace IndexApp.Commands
         private List<string> findNumberPos(List<string> files, string word)
         {
             List<string> numbersPositions = new List<string>();
-            int lineNumber;
+            int lineNumber = 0;
             foreach (string file in files)
             {
                 foreach (string line in File.ReadLines(file))
@@ -125,25 +114,28 @@ namespace IndexApp.Commands
                         lineNumber++;
                         continue;
                     }
-                    numbersPositions.Add(lineNumber.ToString() + " - [" + string.Join(", ", indexesList.ToArray()) + "]");
+                    numbersPositions.Add("{" + lineNumber.ToString() + "}" + " - [" + string.Join(", ", indexesList.ToArray()) + "]");
                     lineNumber++;
                 }
             }
             return numbersPositions;
         }
 
-        private List<int> allIndexesOf(string str, string value)
+        private static List<int> allIndexesOf(string str, string value)
         {
             if (String.IsNullOrEmpty(value))
                 throw new ArgumentException("искомое слово не может быть пустым", "value");
             List<int> indexes = new List<int>();
             for (int index = 0; ; index += value.Length)
             {
-                index = str.IndexOf(value, index) + 1;
-                if (index == 0)
+                index = str.IndexOf(value, index);
+                if (index == -1)
                     return indexes;
-                indexes.Add(index);
+                else if ((index + 1 + value.Length <= str.Length && !separators.Contains(str[index + 1 + value.Length])) || (index > 0 && !separators.Contains(str[index - 1])))
+                    continue;
+                indexes.Add(index + 1);
             }
         }
+
     }
 }

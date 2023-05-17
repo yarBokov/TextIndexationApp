@@ -3,7 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:IndexApp">
     <Application.Resources>
+
         <ResourceDictionary>
+
+            <Style x:Key="gridHeaderStyle" TargetType="GridViewColumnHeader">
+                <Setter Property="Foreground" Value="#2F4F4F"/>
+                <Setter Property="Cursor" Value="Arrow" />
+
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="NoClick">
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
             <SolidColorBrush x:Key="BorderPrimary" Color="#1C1C1C" />
             
             <Style x:Key="lineStyle" TargetType="Line">

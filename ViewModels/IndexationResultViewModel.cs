@@ -34,7 +34,7 @@ namespace IndexApp.ViewModels
             _indexationResultModels = new ObservableCollection<IndexationResultItemViewModel>();
         }
 
-        public void InsertResults(List< Tuple < string, List<string>, string > > tuples)
+        public void InsertResults(List< Tuple < string, List<string>, List <string > > > tuples)
         {
             foreach (var tuple in tuples)
             {
