@@ -21,7 +21,7 @@ namespace IndexApp.Commands
 
         private List<string> fileNames;
 
-        private static List<char> separators = new List<char> { ' ', ':', ';', '.', ',' };
+        private static List<char> separators = new List<char> { ' ', ':', ';', '.', ',', '!', '?' };
 
         public IndexatorUtility(FilesListingViewModel viewModel)
         {
@@ -58,9 +58,23 @@ namespace IndexApp.Commands
         private void getWords()
         {
             string lineBuf = string.Empty;
+            //foreach (var line in BaseLines)
+            //{
+            //    lineBuf = line.Trim(separators.ToArray());
+            //    foreach (char ch in separators)
+            //    {
+            //        lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + "+", ch.ToString());
+            //        lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + @"\s", ch.ToString());
+            //    }
+            //    UniqueWords.UnionWith(lineBuf.Split(separators.ToArray()));
+            //}
             foreach (var line in BaseLines)
             {
-                lineBuf = line.Trim(separators.ToArray());
+                lineBuf = new string((from c in line
+                    where char.IsLetterOrDigit(c) || char.IsWhiteSpace(c) || separators.Contains(c)
+                    select c
+                    ).ToArray());
+                lineBuf = lineBuf.Trim(separators.ToArray());
                 foreach (char ch in separators)
                 {
                     lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + "+", ch.ToString());
@@ -76,9 +90,10 @@ namespace IndexApp.Commands
             foreach (string word in UniqueWords)
             {
                 var wordFileList = getFilesPerWord(word);
+                var numbersPositions = findNumberPos(wordFileList, word);
                 try
                 {
-                    tuples.Add(Tuple.Create(word, wordFileList, findNumberPos(wordFileList, word)));
+                    tuples.Add(Tuple.Create(word, wordFileList, numbersPositions));
                 }
                 catch(Exception ex)
                 {
@@ -107,15 +122,19 @@ namespace IndexApp.Commands
             {
                 foreach (string line in File.ReadLines(file))
                 {
-                    lineNumber = 1;
-                    var indexesList = allIndexesOf(line, word);
-                    if (!indexesList.Any())
-                    {
-                        lineNumber++;
-                        continue;
-                    }
-                    numbersPositions.Add("{" + lineNumber.ToString() + "}" + " - [" + string.Join(", ", indexesList.ToArray()) + "]");
+                    List<int> indexesList = new List<int>();
                     lineNumber++;
+                    try
+                    {
+                        indexesList = allIndexesOf(line, word);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    if (!indexesList.Any())
+                        continue;
+                    numbersPositions.Add("{" + lineNumber.ToString() + "}" + " - [" + string.Join(", ", indexesList.ToArray()) + "]");
                 }
             }
             return numbersPositions;
@@ -126,12 +145,14 @@ namespace IndexApp.Commands
             if (String.IsNullOrEmpty(value))
                 throw new ArgumentException("искомое слово не может быть пустым", "value");
             List<int> indexes = new List<int>();
+            List<char> checkChars = new List<char>(separators);
             for (int index = 0; ; index += value.Length)
             {
                 index = str.IndexOf(value, index);
                 if (index == -1)
                     return indexes;
-                else if ((index + 1 + value.Length <= str.Length && !separators.Contains(str[index + 1 + value.Length])) || (index > 0 && !separators.Contains(str[index - 1])))
+                if ((index + value.Length < str.Length && char.IsLetterOrDigit(str[index + value.Length])) || 
+                    (index > 0 && char.IsLetterOrDigit(str[index - 1])))
                     continue;
                 indexes.Add(index + 1);
             }

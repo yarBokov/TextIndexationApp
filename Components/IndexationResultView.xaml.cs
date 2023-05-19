@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace IndexApp.Components
 {
-    /// <summary>
-    /// Логика взаимодействия для IndexationResultView.xaml
-    /// </summary>
     public partial class IndexationResultView : UserControl
     {
         public IndexationResultView()
@@ -28,6 +25,16 @@ namespace IndexApp.Components
         private void ListView_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void ListView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gridView = listView.View as GridView;
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
+            gridView.Columns[0].Width = workingWidth * 0.20;
+            gridView.Columns[1].Width = workingWidth * 0.20;
+            gridView.Columns[2].Width = workingWidth * 0.60;
         }
     }
 }
