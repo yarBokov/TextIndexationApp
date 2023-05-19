@@ -58,22 +58,14 @@ namespace IndexApp.Commands
         private void getWords()
         {
             string lineBuf = string.Empty;
-            //foreach (var line in BaseLines)
-            //{
-            //    lineBuf = line.Trim(separators.ToArray());
-            //    foreach (char ch in separators)
-            //    {
-            //        lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + "+", ch.ToString());
-            //        lineBuf = Regex.Replace(lineBuf, @"\" + ch.ToString() + @"\s", ch.ToString());
-            //    }
-            //    UniqueWords.UnionWith(lineBuf.Split(separators.ToArray()));
-            //}
             foreach (var line in BaseLines)
             {
                 lineBuf = new string((from c in line
                     where char.IsLetterOrDigit(c) || char.IsWhiteSpace(c) || separators.Contains(c)
                     select c
                     ).ToArray());
+                lineBuf.Replace("?!", "!");
+                lineBuf.Replace("!?", "?");
                 lineBuf = lineBuf.Trim(separators.ToArray());
                 foreach (char ch in separators)
                 {
@@ -145,18 +137,22 @@ namespace IndexApp.Commands
             if (String.IsNullOrEmpty(value))
                 throw new ArgumentException("искомое слово не может быть пустым", "value");
             List<int> indexes = new List<int>();
-            List<char> checkChars = new List<char>(separators);
+            separators.Add('\'');
+            separators.Add('"');
             for (int index = 0; ; index += value.Length)
             {
                 index = str.IndexOf(value, index);
                 if (index == -1)
+                {
+                    separators.Remove('\'');
+                    separators.Remove('"');
                     return indexes;
-                if ((index + value.Length < str.Length && char.IsLetterOrDigit(str[index + value.Length])) || 
-                    (index > 0 && char.IsLetterOrDigit(str[index - 1])))
+                }
+                if ((index + value.Length < str.Length && !separators.Contains(str[index + value.Length])) || 
+                    (index > 0 && !separators.Contains(str[index - 1])))
                     continue;
                 indexes.Add(index + 1);
             }
         }
-
     }
 }
