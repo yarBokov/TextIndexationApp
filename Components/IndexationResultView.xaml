@@ -21,13 +21,6 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView AllowsColumnReorder="True" >
-                        <!--<GridView.Columns>
-                            <GridViewColumn Width="100" Header="Слово" HeaderContainerStyle="{StaticResource gridHeaderStyle}" />
-                            <GridViewColumn Width="160" />
-                            <GridViewColumn Width="300" />
-                        </GridView.Columns>-->
-
-
                         <GridViewColumn
                             Header="Слово" 
                             HeaderContainerStyle="{StaticResource gridHeaderStyle}"
@@ -53,7 +46,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         
-                        <GridViewColumn Header=" '{номер строки} - [индексы вхождений]' " HeaderContainerStyle="{StaticResource gridHeaderStyle}">
+                        <GridViewColumn Header=" ' {номер строки} - [индексы вхождений] ' " HeaderContainerStyle="{StaticResource gridHeaderStyle}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ItemsControl ItemsSource="{Binding Numbers_Positions}" HorizontalAlignment="Center">

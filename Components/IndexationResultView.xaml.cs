@@ -32,9 +32,9 @@ namespace IndexApp.Components
             ListView listView = sender as ListView;
             GridView gridView = listView.View as GridView;
             var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth;
-            gridView.Columns[0].Width = workingWidth * 0.20;
+            gridView.Columns[0].Width = workingWidth * 0.30;
             gridView.Columns[1].Width = workingWidth * 0.20;
-            gridView.Columns[2].Width = workingWidth * 0.60;
+            gridView.Columns[2].Width = workingWidth * 0.50;
         }
     }
 }
